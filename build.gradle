@@ -44,12 +44,12 @@ if(ver == null)
 	ver = "dev"
 version = ver
 group = 'com.troblecodings'
-archivesBaseName = 'TC-Redstone-1.20.4'
+archivesBaseName = 'TC-Redstone-1.20.1'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.20.4'
+    mappings channel: 'official', version: '1.20.1'
 
     runs {
         client {
@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.4-49.0.27'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
 }
 
 jar {
