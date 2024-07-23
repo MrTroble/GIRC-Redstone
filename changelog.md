@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.12.2 - 3.2.3]
+
+* ref: update linkable api
+
 ## [1.12.2 - 3.2.1]
 
 * feat: added multilinking tool
