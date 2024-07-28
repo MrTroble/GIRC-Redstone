@@ -1,5 +1,6 @@
 {
     "item.gircredstone.linker": "WLR Vinculador",
+    "item.gircredstone.multilinker": "WLR Múltiplo Vinculador",
     "item.gircredstone.activator": "WLR Ativador Remoto",
     "block.gircredstone.emitter": "WLR Emissor",
     "block.gircredstone.multiemitter": "WLR Multi-Emissor",
@@ -11,6 +12,7 @@
     "lt.notlinked.msg": "§l§9Por favor, clique em um aceitador para vincular.§r",
     "lt.reset": "§cA ferramenta foi redefinida.§r",
     "lt.notset": "§cA ferramenta não está vinculado.§r",
+    "lt.unlink": "§cEmissor não está mais vinculado!§r",
     "em.notlinked": "§cEmissor não está vinculado!§r",
     "em.unlink": "§cDesvinculado.§r",
     "ra.state": "Ativado: %s"

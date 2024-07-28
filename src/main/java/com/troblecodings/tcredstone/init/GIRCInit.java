@@ -3,6 +3,7 @@ package com.troblecodings.tcredstone.init;
 import java.util.function.Supplier;
 
 import com.troblecodings.linkableapi.Linkingtool;
+import com.troblecodings.linkableapi.MultiLinkingTool;
 import com.troblecodings.tcredstone.GIRCRedstoneMain;
 import com.troblecodings.tcredstone.block.BlockRedstoneAcceptor;
 import com.troblecodings.tcredstone.block.BlockRedstoneEmitter;
@@ -54,6 +55,8 @@ public class GIRCInit {
 
     public static final RegistryObject<Item> RS_LINKER = ITEM_REGISTRY.register("linker",
             () -> new Linkingtool(null, GIRCInit::acceptAcceptor));
+    public static final RegistryObject<Item> RS_MULTILINKER = ITEM_REGISTRY.register("multilinker",
+            () -> new MultiLinkingTool(null, GIRCInit::acceptAcceptor));
     public static final RegistryObject<Item> REMOTE_ACTIVATOR = ITEM_REGISTRY.register("activator",
             () -> new RemoteActivator());
 
@@ -82,7 +85,7 @@ public class GIRCInit {
 
     @SubscribeEvent
     public static void onCreativeTabs(final CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab().equals(CreativeModeTabs.f_257028_)) {
+        if (event.getTab().equals(CreativeModeTabs.REDSTONE_BLOCKS)) {
             ITEM_REGISTRY.getEntries().forEach(event::accept);
         }
     }

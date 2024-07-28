@@ -66,4 +66,12 @@ public class BlockRedstoneEmitter extends Block implements EntityBlock, Message 
         return new TileRedstoneEmitter(pos, state);
     }
 
+    public void message(final Player player, final String text, final Object... obj) {
+        player.sendSystemMessage(getComponent(text, obj));
+    }
+
+    public MutableComponent getComponent(final String text, final Object... obj) {
+        return MutableComponent.create(new TranslatableContents(text, text, obj));
+    }
+
 }

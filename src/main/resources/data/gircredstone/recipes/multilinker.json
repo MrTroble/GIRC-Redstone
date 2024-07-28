@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " I ",
+        " i ",
+        " x "
+    ],
+    "key": {
+        "I": {
+            "item": "minecraft:quartz"
+        },
+        "i": {
+            "item": "minecraft:redstone_torch"
+        },
+        "x": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "item": "gircredstone:multilinker"
+    }
+}

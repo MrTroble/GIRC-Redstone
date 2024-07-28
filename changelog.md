@@ -7,6 +7,10 @@
 ## [1.19.4-Forge]
 
 * Updated to Forge version 1.19.4-45.0.1
+## [1.19.4 - 3.2.1]
+
+* update to 1.19.4
+* added multi linking tool
 
 ## [Update]
 
