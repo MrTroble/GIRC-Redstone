@@ -5,6 +5,8 @@ import com.troblecodings.tcredstone.init.GIRCInit;
 import com.troblecodings.tcredstone.tile.TileRedstoneEmitter;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -66,10 +68,12 @@ public class BlockRedstoneEmitter extends Block implements EntityBlock, Message 
         return new TileRedstoneEmitter(pos, state);
     }
 
+    @Override
     public void message(final Player player, final String text, final Object... obj) {
         player.sendSystemMessage(getComponent(text, obj));
     }
 
+    @Override
     public MutableComponent getComponent(final String text, final Object... obj) {
         return MutableComponent.create(new TranslatableContents(text, text, obj));
     }
