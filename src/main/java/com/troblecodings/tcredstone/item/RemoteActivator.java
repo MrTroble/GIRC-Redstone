@@ -27,13 +27,19 @@ public class RemoteActivator extends Linkingtool {
     public ActionResult<ItemStack> onItemRightClick(final World level, final EntityPlayer player,
             final EnumHand hand) {
         final ItemStack itemstack = player.getHeldItem(hand);
-        if (!hand.equals(EnumHand.MAIN_HAND) || level.isRemote)
-            return ActionResult.newResult(EnumActionResult.PASS, itemstack);
-        final NBTTagCompound comp = itemstack.getTagCompound();
-        final BlockPos linkpos = NBTUtil.getPosFromTag(comp);
-        final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
-        message(player, "ra.state", String.valueOf(state));
-        return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+        final NBTTagCompound tag = getOrCreateForStack(itemstack);
+        if (tag.hasKey(LINKINGTOOL_TAG)) {
+            if (!hand.equals(EnumHand.MAIN_HAND) || level.isRemote)
+                return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+            final NBTTagCompound comp = tag.getCompoundTag(LINKINGTOOL_TAG);
+            final boolean containsPos = comp.hasKey("X") && comp.hasKey("Y") && comp.hasKey("Z");
+            if (containsPos) {
+                final BlockPos linkpos = NBTUtil.getPosFromTag(comp);
+                final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
+                message(player, "ra.state", String.valueOf(state));
+                return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+            }
+        }
+        return ActionResult.newResult(EnumActionResult.PASS, itemstack);
     }
-
 }
