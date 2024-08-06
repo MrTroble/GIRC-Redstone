@@ -1,7 +1,8 @@
 package com.troblecodings.tcredstone.item;
 
+import java.util.function.BiPredicate;
+
 import com.troblecodings.linkableapi.Linkingtool;
-import com.troblecodings.tcredstone.init.TCInit;
 import com.troblecodings.tcredstone.tile.TileRedstoneEmitter;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,20 +17,28 @@ import net.minecraft.world.World;
 
 public class RemoteActivator extends Linkingtool {
 
-	public RemoteActivator(ItemGroup tab) {
-		super(tab, TCInit::acceptAcceptor, _u1 -> false);
-	}
+    public RemoteActivator(final ItemGroup tab, final BiPredicate<World, BlockPos> predicate) {
+        super(tab, predicate, _u1 -> false);
+    }
 
-	@Override
-	public TypedActionResult<ItemStack> use(final World level, final PlayerEntity player, final Hand hand) {
-		final ItemStack itemstack = player.getStackInHand(hand);
-		if (!hand.equals(Hand.MAIN_HAND) || level.isClient())
-			return TypedActionResult.pass(itemstack);
-		final NbtCompound comp = itemstack.getNbt();
-		final BlockPos linkpos = NbtHelper.toBlockPos(comp);
-		final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
-		message(player, "ra.state", String.valueOf(state));
-		return TypedActionResult.success(itemstack);
-	}
-
+    @Override
+    public TypedActionResult<ItemStack> use(final World level, final PlayerEntity player,
+            final Hand hand) {
+        final ItemStack itemstack = player.getStackInHand(hand);
+        final NbtCompound tag = itemstack.getOrCreateNbt();
+        if (tag.contains(LINKINGTOOL_TAG)) {
+            if (!hand.equals(Hand.MAIN_HAND) || level.isClient())
+                return TypedActionResult.pass(itemstack);
+            final NbtCompound comp = tag.getCompound(LINKINGTOOL_TAG);
+            final boolean containsPos =
+                    comp.contains("X") && comp.contains("Y") && comp.contains("Z");
+            if (containsPos) {
+                final BlockPos linkpos = NbtHelper.toBlockPos(comp);
+                final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
+                message(player, "ra.state", String.valueOf(state));
+                return TypedActionResult.success(itemstack);
+            }
+        }
+        return TypedActionResult.success(itemstack);
+    }
 }
