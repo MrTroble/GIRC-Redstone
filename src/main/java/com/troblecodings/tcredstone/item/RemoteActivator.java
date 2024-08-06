@@ -26,12 +26,20 @@ public class RemoteActivator extends Linkingtool {
     public InteractionResultHolder<ItemStack> use(final Level level, final Player player,
             final InteractionHand hand) {
         final ItemStack itemstack = player.getItemInHand(hand);
-        if (!hand.equals(InteractionHand.MAIN_HAND) || level.isClientSide)
-            return InteractionResultHolder.pass(itemstack);
-        final CompoundTag comp = itemstack.getTag();
-        final BlockPos linkpos = NbtUtils.readBlockPos(comp);
-        final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
-        message(player, "ra.state", String.valueOf(state));
+        final CompoundTag tag = itemstack.getOrCreateTag();
+        if (tag.contains(LINKINGTOOL_TAG)) {
+            if (!hand.equals(InteractionHand.MAIN_HAND) || level.isClientSide)
+                return InteractionResultHolder.pass(itemstack);
+            final CompoundTag comp = tag.getCompound(LINKINGTOOL_TAG);
+            final boolean containsPos =
+                    comp.contains("X") && comp.contains("Y") && comp.contains("Z");
+            if (containsPos) {
+                final BlockPos linkpos = NbtUtils.readBlockPos(comp);
+                final boolean state = TileRedstoneEmitter.redstoneUpdate(linkpos, level);
+                message(player, "ra.state", String.valueOf(state));
+                return InteractionResultHolder.success(itemstack);
+            }
+        }
         return InteractionResultHolder.success(itemstack);
     }
 
