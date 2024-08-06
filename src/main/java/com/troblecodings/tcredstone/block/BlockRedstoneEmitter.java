@@ -1,5 +1,6 @@
 package com.troblecodings.tcredstone.block;
 
+import com.troblecodings.linkableapi.Message;
 import com.troblecodings.tcredstone.init.GIRCInit;
 import com.troblecodings.tcredstone.tile.TileRedstoneEmitter;
 
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockRedstoneEmitter extends Block implements EntityBlock {
+public class BlockRedstoneEmitter extends Block implements EntityBlock, Message {
 
     public BlockRedstoneEmitter(final Properties properties) {
         super(properties);
@@ -34,14 +35,15 @@ public class BlockRedstoneEmitter extends Block implements EntityBlock {
             final TileRedstoneEmitter emitter = (TileRedstoneEmitter) entity;
             final BlockPos linkedpos = emitter.getLinkedPos();
             if (linkedpos == null) {
-                player.sendSystemMessage(MutableComponent.create(new TranslatableContents(
-                        "em.notlinked", (String) null, TranslatableContents.NO_ARGS)));
+                message(player, "em.notlinked");
             } else {
                 if (player.isCrouching()) {
                     emitter.unlink();
-                    message(player, "lt.linkedpos", pos.getX(), pos.getY(), pos.getZ());
+                    message(player, "em.unlink", linkedpos.getX(), linkedpos.getY(),
+                            linkedpos.getZ());
                 } else {
-                    message(player, "lt.linkedpos", pos.getX(), pos.getY(), pos.getZ());
+                    message(player, "lt.linkedpos", linkedpos.getX(), linkedpos.getY(),
+                            linkedpos.getZ());
                 }
             }
             return InteractionResult.SUCCESS;
@@ -66,10 +68,12 @@ public class BlockRedstoneEmitter extends Block implements EntityBlock {
         return new TileRedstoneEmitter(pos, state);
     }
 
+    @Override
     public void message(final Player player, final String text, final Object... obj) {
         player.sendSystemMessage(getComponent(text, obj));
     }
 
+    @Override
     public MutableComponent getComponent(final String text, final Object... obj) {
         return MutableComponent.create(new TranslatableContents(text, text, obj));
     }

@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.19.4 - 3.2.3]
+
+* feat: add item damage
+* ref: update linkable api
+
+## [1.19.4 - 3.2.2]
+
+* rem: debug output
+
+## [1.19.4-Forge]
+
+* Updated to Forge version 1.19.4-45.0.1
 ## [1.19.4 - 3.2.1]
 
 * update to 1.19.4
