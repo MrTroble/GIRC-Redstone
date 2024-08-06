@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.14.4 - 3.2.3]
+
+* feat: add item damage
+* ref: update linkable api
+
 ## [1.14.4 - 3.2.2]
 
 * rem: debug output
