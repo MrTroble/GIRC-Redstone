@@ -29,48 +29,58 @@ import net.minecraft.world.World;
 
 public class TCInit {
 
-	public static final Item RS_LINKER = registerItem("linker", new Linkingtool(null, TCInit::acceptAcceptor),
-			ItemGroups.REDSTONE);
-	public static final Item RS_MULTILINKER = registerItem("multilinker",
-			new MultiLinkingTool(null, TCInit::acceptAcceptor), ItemGroups.REDSTONE);
-	public static final Item REMOTE_ACTIVATOR = registerItem("activator", new RemoteActivator(), ItemGroups.REDSTONE);
+    public static final Item RS_LINKER = registerItem("linker",
+            new Linkingtool(null, TCInit::acceptAcceptor), ItemGroups.REDSTONE);
+    public static final Item RS_MULTILINKER = registerItem("multilinker",
+            new MultiLinkingTool(null, TCInit::acceptAcceptor), ItemGroups.REDSTONE);
+    public static final Item REMOTE_ACTIVATOR = registerItem("activator",
+            new RemoteActivator(TCInit::acceptAcceptor), ItemGroups.REDSTONE);
 
-	public static final Block RS_ACCEPTOR = registerBlock("acceptor",
-			new BlockRedstoneAcceptor(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)), ItemGroups.REDSTONE);
-	public static final Block RS_EMITTER = registerBlock("emitter",
-			new BlockRedstoneEmitter(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)), ItemGroups.REDSTONE);
-	public static final Block RS_MULTI_EMITTER = registerBlock("multiemitter",
-			new BlockRedstoneMultiEmitter(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)), ItemGroups.REDSTONE);
+    public static final Block RS_ACCEPTOR = registerBlock("acceptor",
+            new BlockRedstoneAcceptor(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)),
+            ItemGroups.REDSTONE);
+    public static final Block RS_EMITTER = registerBlock("emitter",
+            new BlockRedstoneEmitter(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)),
+            ItemGroups.REDSTONE);
+    public static final Block RS_MULTI_EMITTER = registerBlock("multiemitter",
+            new BlockRedstoneMultiEmitter(
+                    FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f)),
+            ItemGroups.REDSTONE);
 
-	public static final BlockEntityType<TileRedstoneEmitter> EMITER_TILE = Registry.register(
-			Registries.BLOCK_ENTITY_TYPE, new Identifier(TCRedstoneMain.MODID, "emitter"),
-			FabricBlockEntityTypeBuilder.create(TileRedstoneEmitter::new, RS_EMITTER).build());
-	public static final BlockEntityType<TileRedstoneMultiEmitter> MULTI_EMITER_TILE = Registry.register(
-			Registries.BLOCK_ENTITY_TYPE, new Identifier(TCRedstoneMain.MODID, "multiemitter"),
-			FabricBlockEntityTypeBuilder.create(TileRedstoneMultiEmitter::new, RS_MULTI_EMITTER).build());
+    public static final BlockEntityType<TileRedstoneEmitter> EMITER_TILE = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(TCRedstoneMain.MODID, "emitter"),
+            FabricBlockEntityTypeBuilder.create(TileRedstoneEmitter::new, RS_EMITTER).build());
+    public static final BlockEntityType<TileRedstoneMultiEmitter> MULTI_EMITER_TILE =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                    new Identifier(TCRedstoneMain.MODID, "multiemitter"),
+                    FabricBlockEntityTypeBuilder
+                            .create(TileRedstoneMultiEmitter::new, RS_MULTI_EMITTER).build());
 
-	public static boolean acceptAcceptor(final World level, final BlockPos pos) {
-		return level.getBlockState(pos).getBlock() instanceof BlockRedstoneAcceptor;
-	}
+    public static boolean acceptAcceptor(final World level, final BlockPos pos) {
+        return level.getBlockState(pos).getBlock() instanceof BlockRedstoneAcceptor;
+    }
 
-	private static Block registerBlock(String name, Block block, ItemGroup redstone) {
-		registerBlockItem(name, block, redstone);
-		return Registry.register(Registries.BLOCK, new Identifier(TCRedstoneMain.MODID, name), block);
-	}
+    private static Block registerBlock(final String name, final Block block,
+            final ItemGroup redstone) {
+        registerBlockItem(name, block, redstone);
+        return Registry.register(Registries.BLOCK, new Identifier(TCRedstoneMain.MODID, name),
+                block);
+    }
 
-	private static Item registerBlockItem(String name, Block block, ItemGroup redstone) {
-		Item item = Registry.register(Registries.ITEM, new Identifier(TCRedstoneMain.MODID, name),
-				new BlockItem(block, new FabricItemSettings()));
-		ItemGroupEvents.modifyEntriesEvent(redstone).register(entries -> entries.add(item));
-		return item;
-	}
+    private static Item registerBlockItem(final String name, final Block block,
+            final ItemGroup redstone) {
+        Item item = Registry.register(Registries.ITEM, new Identifier(TCRedstoneMain.MODID, name),
+                new BlockItem(block, new FabricItemSettings()));
+        ItemGroupEvents.modifyEntriesEvent(redstone).register(entries -> entries.add(item));
+        return item;
+    }
 
-	private static Item registerItem(String name, Item item, ItemGroup redstone) {
-		ItemGroupEvents.modifyEntriesEvent(redstone).register(entries -> entries.add(item));
-		return Registry.register(Registries.ITEM, new Identifier(TCRedstoneMain.MODID, name), item);
-	}
+    private static Item registerItem(final String name, final Item item, final ItemGroup redstone) {
+        ItemGroupEvents.modifyEntriesEvent(redstone).register(entries -> entries.add(item));
+        return Registry.register(Registries.ITEM, new Identifier(TCRedstoneMain.MODID, name), item);
+    }
 
-	public static void init() {
-	}
+    public static void init() {
+    }
 
 }
